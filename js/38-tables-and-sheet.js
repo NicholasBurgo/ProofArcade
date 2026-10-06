@@ -142,23 +142,42 @@ function openTables(which = unit.tables[0], at = null) {
   head.addEventListener('pointerup', drop)
   head.addEventListener('pointercancel', drop)
 }
+// From those who took the test: its sheet prints the formulas with no names on them, and
+// of the pdfs the study guide called "possibly given", the geometric, binomial and
+// hypergeometric; not the negative binomial
+const SHEET_LEFT_OFF = /^Negative binomial/
+const SHEET_BARE = 'math3800-arcade.sheet-bare'
 async function openSheet() {
   await mathBoot
   overlay.replaceChildren()
   const inner = h('div', 'overlay-inner')
   const head = h('div', 'overlay-head')
   head.append(h('strong', '', 'Formula sheet'))
+  // as the test prints it: no names. Tap a formula to see its name
+  const bare = h('button', 'tool', 'Hide the names')
+  bare.type = 'button'
+  const setBare = on => {
+    inner.classList.toggle('fs-bare', on)
+    bare.setAttribute('aria-pressed', String(on))
+    bare.textContent = on ? 'Show the names' : 'Hide the names'
+    inner.querySelectorAll('.formula').forEach(c => c.classList.remove('fs-peek'))
+    try { localStorage.setItem(SHEET_BARE, on ? '1' : '') } catch {}
+  }
+  bare.addEventListener('click', () => setBare(!inner.classList.contains('fs-bare')))
   const close = h('button', 'tool', 'Close')
   close.type = 'button'
   close.addEventListener('click', closeOverlay)
-  head.append(close)
+  head.append(bare, close)
   inner.append(head)
   const group = (title, lines) => {
     inner.append(h('h3', '', title))
     const grid = h('div', 'sheet-grid')
     for (const f of lines) {
       const card = h('div', 'formula')
+      card.setAttribute('role', 'button')
+      card.tabIndex = 0
       card.append(h('p', '', f.label), tex(f.latex))
+      card.addEventListener('click', () => card.classList.toggle('fs-peek'))
       grid.append(card)
     }
     inner.append(grid)
@@ -167,6 +186,8 @@ async function openSheet() {
   // engine's list missed means and variances the quiz asks for (negative binomial,
   // hypergeometric, uniform) and listed the negative binomial pdf, which may be given.
   const know = [
+    ...unit.sheet.maybe.filter(f => SHEET_LEFT_OFF.test(f.label)).map(f => ({ ...f, label: `${f.label} pdf · not on the sheet: derive it` })),
+    { label: 'Uniform pdf · derive it: f(x) = c on [a, b], and its area c(b − a) = 1', latex: R`f(x) = \begin{cases} \frac{1}{b-a} & a \le x \le b \\ 0 & \text{otherwise} \end{cases}` },
     { label: 'A pdf', latex: R`f(x) \ge 0, \quad \sum f(x) = 1 \;\text{ or }\; \int_{-\infty}^{\infty} f(x)\,dx = 1` },
     { label: 'cdf and pdf', latex: R`F(x) = P[X \le x] = \sum_{t \le x} f(t) \;\text{ or }\; \int_{-\infty}^{x} f(t)\,dt, \qquad f(x) = F'(x)` },
     { label: 'Mean and variance', latex: R`\begin{gathered} E[X] = \sum x f(x) \;\text{ or }\; \int x f(x)\,dx \\ \operatorname{Var}X = E[X^2] - (E[X])^2, \quad \sigma = \sqrt{\operatorname{Var}X} \end{gathered}` },
@@ -186,10 +207,10 @@ async function openSheet() {
     { label: 'Chi-squared', latex: R`\begin{gathered} \text{gamma with } \alpha = \tfrac{\gamma}{2},\; \beta = 2:\; \mu = \gamma,\; \sigma^2 = 2\gamma,\; m_X(t) = (1 - 2t)^{-\gamma/2} \\ \chi^2_r \text{ has area } r \text{ to its right} \end{gathered}` },
     { label: 'Normal', latex: R`\begin{gathered} Z = \frac{X - \mu}{\sigma}, \quad \text{percentile} = \text{left area}, \quad m_X(t) = e^{\mu t + \sigma^2 t^2/2} \\ z_r \text{ has area } r \text{ to its right} \end{gathered}` },
   ]
-  inner.append(h('p', 'paper-note', 'The study guide: the test hands you a formula sheet with the first group (the second maybe), minus any formula a question asks you to derive, plus the tables.'))
-  group('Printed on the sheet: you get these', unit.sheet.given)
-  group('Might be on the sheet, might not: learn to build these yourself', unit.sheet.maybe)
-  group('Never on the sheet: memorize these', know)
+  inner.append(h('p', 'paper-note', 'From people who took it: the sheet prints these formulas with no names on them (tap Hide the names to practise reading it that way), the geometric, binomial and hypergeometric pdfs included. The negative binomial pdf was left off, and there was a uniform pdf question. Plus the tables.'))
+  group('Printed on the sheet, with no names', [...unit.sheet.given, ...unit.sheet.maybe.filter(f => !SHEET_LEFT_OFF.test(f.label))])
+  group('Not on the sheet: know these, or derive them', know)
+  try { if (localStorage.getItem(SHEET_BARE)) setBare(true) } catch {}
   overlay.append(inner)
   overlay.hidden = false
   document.body.style.overflow = 'hidden'

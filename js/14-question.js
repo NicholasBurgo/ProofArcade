@@ -5,9 +5,11 @@ function showQuestion() {
   screen = 'question'
   const q = round.queue[round.at]
   q.seen++
-  if (q.p.buildIt && !round.paper) q.p = buildAsOne(q.p)
-  // (a quiz question that comes back, missed or skipped, comes back with new numbers)
+  if (q.p.buildIt && !round.paper && !round.pen) q.p = buildAsOne(q.p)
+  // (a quiz question that comes back, missed or skipped, comes back with new numbers; so
+  // does one written out with the pen)
   if (q.seen > 1 && q.p.quizLevel && q.p.twin) q.p = q.p.another()
+  else if (q.seen > 1 && round.pen && q.p.another) q.p = q.p.another()
   const p = q.p
   view.replaceChildren()
   const sheet = h('section', 'sheet')
@@ -21,13 +23,14 @@ function showQuestion() {
   })
   top.append(round.learn ? h('span', 'learn-tag', 'Learn mode · doesn’t count') : prog, skipButton(q))
   sheet.append(top)
-  sheet.append(h('div', 'eyebrow', round.short + (q.level && !isShuffledQuiz(round.short) ? ' · ' + q.level : '') + (round.paper ? ' · paper mode' : '') + (q.seen > 1 ? ' · second chance' : '')))
+  sheet.append(h('div', 'eyebrow', round.short + (q.level && !isShuffledQuiz(round.short) && !isPenRound(round.short) ? ' · ' + q.level : '') + (round.paper ? ' · paper mode' : '') + (round.pen && !isPenRound(round.short) ? ' · pen mode' : '') + (q.seen > 1 ? ' · second chance' : '')))
   if (p.slice) return sliceQuestion(p, sheet, q)
   if (p.ask) sheet.append(h('p', 'ask', p.ask))
   if (p.text) sheet.append(h('p', 'story', p.text))
   const qMath = tex(p.latex)
   qMath.classList.add('q-math')
   sheet.append(qMath)
+  if (round.pen) return penQuestion(p, sheet, q)
   if (round.learn) sheet.append(learnBar(p, sheet))
   if (!round.paper && p.start) sheet.append(firstMove(p))
   if (!round.learn && !round.paper && p.another) {
@@ -76,12 +79,13 @@ function showQuestion() {
   window.scrollTo({ top: 0 })
 }
 
-// Check first (learn mode's Show me presses the box's first button), then Hint, How do I
-// do this? and Skip, all on one row under the answer; what Hint and How do I do this? open
-// goes under the row. A question without one Check keeps its own layout.
+// Check first (learn mode's Show me presses the box's first button; pen mode's Show the
+// work stands in for it), then Hint, How do I do this? and Skip, all on one row under the
+// answer; what Hint and How do I do this? open goes under the row. A question without one
+// Check keeps its own layout.
 function questionActions(sheet) {
   if (!sheet.isConnected) return
-  const check = [...sheet.querySelectorAll('button')].find(b => b.textContent.trim() === 'Check' && !b.closest('.why, .plug, .mgf, .q-acts'))
+  const check = sheet.querySelector(':scope > .pen-show') ?? [...sheet.querySelectorAll('button')].find(b => b.textContent.trim() === 'Check' && !b.closest('.why, .plug, .mgf, .q-acts'))
   if (!check) return
   const row = h('div', 'q-acts')
   check.before(row)

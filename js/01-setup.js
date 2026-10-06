@@ -25,6 +25,10 @@ const TREE_LEVEL = 'Which distribution? (all chapters)'
 const MGF_LEVEL = 'Build the MGF'
 // its numbers (n, p, r, N, k) and the values X can take, read off the story
 const PARAM_LEVEL = 'Read off the numbers'
+// the derivations, written out with the pen like the test, then checked (js/37c)
+const PEN_ROUND = 'Derivations · write them out'
+const PEN_SIZE = 10
+const isPenRound = short => short === PEN_ROUND
 const isTree = short => short === TREE_LEVEL
 const isMgf = short => short === MGF_LEVEL
 const isParam = short => short === PARAM_LEVEL
@@ -37,4 +41,4 @@ const levelKinds = short => (isWorld0(short) || short in REVIEW_NAMES ? [] : (LE
 // the level sets its own size: a derivation that is the same every time); a mix
 // asks one question from each of its levels; naming the distribution is quick, so its
 // rounds run twice as long (a quiz question's level sets its own size: every part once)
-const roundSize = short => (short in REVIEW_NAMES ? REVIEW[short].length : isTree(short) ? ROUND * 2 : isMgf(short) ? 5 : isParam(short) ? 10 : levelKinds(short).length ? LEVELS[short]?.size ?? Math.max(ROUND, levelKinds(short).length) : LEVELS[short]?.size ?? Math.max(ROUND, Math.min(10, sliceKinds(short).length)))
+const roundSize = short => (isPenRound(short) ? PEN_SIZE : short in REVIEW_NAMES ? REVIEW[short].length : isTree(short) ? ROUND * 2 : isMgf(short) ? 5 : isParam(short) ? 10 : levelKinds(short).length ? LEVELS[short]?.size ?? Math.max(ROUND, levelKinds(short).length) : LEVELS[short]?.size ?? Math.max(ROUND, Math.min(10, sliceKinds(short).length)))

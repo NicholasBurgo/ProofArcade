@@ -25,6 +25,12 @@ Progress is saved in each browser, so the online copy and the local one keep sep
 
 - **Next up** — the first level without two stars. The bell counts the stars you've earned;
   tap it for your weak spots.
+- **Derivations · write them out** — ten questions like the test's written half: the
+  geometric MGF and a continuous one, E[X] or Var X from an MGF, pdf → cdf and cdf → pdf,
+  the negative binomial pdf (the test's sheet leaves it off), the uniform pdf, a pdf to
+  show is one, the geometric cdf, and a constant c or a mean. No list: write the whole
+  answer with the pen, tap **Show the work** to watch the worked answer, then say whether
+  you had it (a miss comes back with new numbers).
 - **Fundamentals** — every chapter:
   - *Which distribution?* — name the distribution for a test-style story with a trap, from
     a list with their formulas. A right answer plugs the story's numbers into the formula,
@@ -42,7 +48,8 @@ Progress is saved in each browser, so the online copy and the local one keep sep
 
 On every question: **Hint** (how to start, never the answer), **How do I do this?** (one of
 the same kind with new numbers, answered and played), **Learn mode** (try it or tap Show me;
-nothing counts) and **Paper mode** (no list, type the answer, as on the real test).
+nothing counts), **Pen mode** (no list: write it out, then Show the work and say whether you
+had it) and **Paper mode** (no list, type the answer).
 
 ### Quiz questions (the card at the bottom)
 
@@ -76,7 +83,10 @@ question per section, a short one, or one section).
 - **Calc** — a pop-up calculator from the header: + − × ÷, powers, x!, C(n, k), √, ln, eˣ,
   π, e and Ans, with 2(3) read as times. Drag it by its title bar out of the way; it stays
   there, and it floats over the tables so you can look up and work at once.
-- **Formulas** — what the formula sheet gives, what it might give, and what is never on it.
+- **Formulas** — what the test's formula sheet prints (from people who took it: no names on
+  the formulas, and the geometric, binomial and hypergeometric pdfs but not the negative
+  binomial), and what to know or derive. **Hide the names** shows it as the test does; tap
+  a formula to see its name.
 - **Weak spots** — every skill on the study guide, weakest first, with the levels that drill it.
 - **S Pen ink** — write anywhere with the pen; fingers still scroll. Hold the side button
   to erase; let go to write again. Samsung Internet reports the held button directly;

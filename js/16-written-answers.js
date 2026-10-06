@@ -163,7 +163,7 @@ function finish() {
 
   view.replaceChildren()
   const sheet = h('section', 'sheet')
-  sheet.append(h('div', 'eyebrow', r.own ? `Done · ${quizOwnLabel(r.short).replace(/^The/, 'the')}` : r.paper ? 'Level cleared · paper mode' : 'Level cleared'))
+  sheet.append(h('div', 'eyebrow', r.own ? `Done · ${quizOwnLabel(r.short).replace(/^The/, 'the')}` : r.paper ? 'Level cleared · paper mode' : r.pen && !isPenRound(r.short) ? 'Level cleared · pen mode' : 'Level cleared'))
   sheet.append(h('h2', '', r.short))
   const st = h('div', 'result-stars')
   for (let i = 0; i < 3; i++) {
@@ -191,7 +191,7 @@ function finish() {
   const nextShort = quizL ? quizLevelAfter(r.short) : ORDER[(i + 1) % ORDER.length]
   const again = h('button', stars < 3 || r.own ? 'btn' : 'btn ghost', 'Run it again')
   again.type = 'button'
-  again.addEventListener('click', () => (r.own ? startRound(r.short, false, false, true) : startRound(r.short)))
+  again.addEventListener('click', () => (r.own ? startRound(r.short, false, false, true) : startRound(r.short, false, false, false, Boolean(r.pen))))
   const nxt = h('button', stars < 3 || r.own ? 'btn ghost' : 'btn', quizL ? 'Next quiz question' : 'Next level')
   nxt.type = 'button'
   nxt.addEventListener('click', () => openCard(nextShort))

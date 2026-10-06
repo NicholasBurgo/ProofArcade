@@ -15,6 +15,10 @@
 .sheet-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin-top: 10px; }
 .formula { background: var(--sheet); border: 1.5px solid var(--rule-soft); border-radius: 12px; padding: 10px 12px; overflow-x: auto; }
 .formula p { margin: 0 0 4px; font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--rule); }
+/* the sheet as the test prints it: no names; tap a formula to see its name */
+.fs-bare .formula { cursor: pointer; }
+.fs-bare .formula > p { visibility: hidden; }
+.fs-bare .formula.fs-peek > p { visibility: visible; }
 .overlay h3 { font-family: var(--display); text-transform: uppercase; font-size: 1.4rem; margin: 18px 0 0; }
 
 .ready-overall { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; margin: 10px 0 4px; font-size: 1.05rem; }

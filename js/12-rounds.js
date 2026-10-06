@@ -2,12 +2,18 @@
 // Loaded in order by index.html as a classic script: top-level names are shared with the other js/ files.
 // ---------- rounds: a level's questions, learn mode ----------
 // a quick round: the first questions of a round, which are one of each kind. own: a quiz
-// question's level on the quiz's own numbers (js/37b)
+// question's level on the quiz's own numbers (js/37b). pen: write each answer out with
+// the pen, then check it against the work and say whether you had it (js/37c)
 const QUICK_ROUND = 4
-async function startRound(short, paper = false, quick = false, own = false) {
+async function startRound(short, paper = false, quick = false, own = false, pen = false) {
   view.replaceChildren(h('p', 'loading', 'Shuffling the deck…'))
   await mathBoot
-  const queue = []
+  let queue = []
+  if (isPenRound(short)) {
+    round = { short, paper: false, quick, pen: true, queue: penRound(quick), at: 0, combo: 0, best: 0, misses: 0, marks: [] }
+    showQuestion()
+    return
+  }
   if (isReview(short)) {
     // every level once, then more, shuffled; never the same level twice in a row
     const parts = REVIEW[short]
@@ -37,8 +43,10 @@ async function startRound(short, paper = false, quick = false, own = false) {
   if (isMgf(short)) for (const p of mgfRound(roundSize(short))) queue.push({ p, seen: 0, missed: false })
   if (isParam(short)) for (const p of paramRound(roundSize(short), paper)) queue.push({ p, seen: 0, missed: false })
   if (!isWorld0(short)) for (const p of sectionRound(short, quick, own)) queue.push({ p, seen: 0, missed: false })
+  // (pen mode keeps what can be written out and checked: not "which distribution is this MGF?")
+  if (pen) queue = queue.filter(q => penCan(q.p))
   if (quick) queue.splice(QUICK_ROUND)
-  round = { short, paper, quick, own, queue, at: 0, combo: 0, best: 0, misses: 0, marks: [] }
+  round = { short, paper, quick, own, pen, queue, at: 0, combo: 0, best: 0, misses: 0, marks: [] }
   showQuestion()
 }
 
