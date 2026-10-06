@@ -1,275 +1,142 @@
 # Notes for Chapter 4
 
-*Copied from `3800 Chapter 4 Notes.pdf` (18 pages). The handout leaves blank space under each example and proof for working in class; those blanks are marked "*(blank for work)*". The quiz and homework numbers for every section are collected in [assignments.md](assignments.md).*
+*Copied from `Ch4 (1).pdf` (13 pages). Every section in the handout (4.1–4.6) is on Test 2. The handout leaves blank space under each example and proof for working in class; those blanks are marked "*(blank for work)*". The homework numbers for every section are collected in [assignments.md](assignments.md).*
 
-## Section 4.1 – Continuous Densities
+## Section 4.1 – Proofs Involving Divisibility of Integers
 
-> Possible quiz question: Chapter 4 exercises 1, 10
-> Homework: Chapter 4 exercises 4, 13, 14
+> HW: # 2, 10
+> (For # 10, prove the direction not done in class. Hint: Show $n^4$ is odd and use Theorem 3.12 twice.)
 
-A random variable is continuous if it can assume any value in an interval or union of intervals of real numbers and the probability that it assumes a specific value is 0.
+**Definition:** If $a$ and $b$ are integers and $a \ne 0$, then $a$ <u>divides</u> $b$ if and only if $b = ac$ for some integer $c$. We also say $b$ is a <u>multiple</u> of $a$, $a$ is a <u>factor</u> of $b$, and $a$ is a <u>divisor</u> of $b$.
 
-We can determine the probability that a value will fall into a range.
+**Notation:** $a \mid b$ means "$a$ divides $b$" and $a \nmid b$ means "$a$ does not divide $b$."
 
-### Continuous Density
+**Examples:** Which of the following are true statements? $3 \mid 9$, $7 \mid 22$, $1 \mid 76$, $-16 \mid 0$ *(blank for work)*
 
-Let $X$ be a continuous random variable. A function $f$ that satisfies the three criteria below is a density (pdf) for $X$.
+**Note:** $a \mid b$ is NOT a number.
 
-- $f(x) \ge 0$ for all real numbers $x$
-- $\int_{-\infty}^{\infty} f(x)\,dx = 1$
-- $P[a \le X \le b] = \int_a^b f(x)\,dx$ for real numbers $a$ and $b$
+**Result 4.1: (Transitivity of Divisibility)** Let $a, b, c \in \mathbb{Z}$ with $a, b \ne 0$. If $a \mid b$ and $b \mid c$, then $a \mid c$.
 
-For continuous random variables, we replace the summation with an integral, and find probabilities of ranges instead of individual values.
+**Proof:** *(blank for work)*
 
-**Example:** The lead concentration in gasoline (grams per liter) is given by the pdf
+**Example:** For all integers $a$, $b$, and $c$, if $a \mid b$ and $a \mid c$, then $a \mid (2b - 3c)$. *(blank for work)*
 
-$$f(x) = \begin{cases} 12.5x - 1.25 & 0.1 \le x \le 0.5 \\ 0 & \text{otherwise} \end{cases}$$
+**Result 4.4:** Let $x \in \mathbb{Z}$. If $2 \mid (x^2 - 1)$, then $4 \mid (x^2 - 1)$.
 
-Show that this is a pdf, then find the probability that the lead concentration in a randomly selected liter will be between 0.2 and 0.3 grams per liter. *(blank for work)*
+**Proof:** *(blank for work)*
 
-Notice that since $P(X = a) = 0$ and $P(X = b) = 0$, the following is true:
+**Example:** (# 5) Let $a, b, c \in \mathbb{Z}$, where $a \ne 0$. If $a \nmid bc$, then $a \nmid b$ and $a \nmid c$.
 
-$$P[a \le X \le b] = P[a \le X < b] = P[a < X \le b] = P[a < X < b]$$
+**Proof:** *(blank for work)*
 
-### Cumulative Distribution
+**Example:** (# 10) (one direction only) Let $n \in \mathbb{Z}$. If $4 \mid (n^2 + 3)$, then $2 \mid (n^4 - 3)$.
 
-The cumulative distribution function is $F(x) = P[X \le x]$. For continuous random variables, it is
+**Proof:** *(blank for work)*
 
-$$F(x) = \int_{-\infty}^{x} f(t)\,dt$$
+## Section 4.2 – Proofs Involving Congruence of Integers
 
-**Example:** Find the cdf for the lead concentration in gasoline. *(blank for work)*
+> HW: # 14, 22d, 75, 87. (Use definitions in all proofs. Do not use theorems from the text.)
 
-Given the cdf, we can find the pdf by differentiation.
+**Definition:** If $a$ and $b$ are integers and $n \ge 2$, we say <u>$a$ is congruent to $b$ modulo $n$</u> if $n \mid (a - b)$. Notation: $a \equiv b \pmod{n}$.
 
-**Example:** Find the pdf for the cdf found in the last example. *(blank for work)*
+**Note:** $a \equiv b \pmod{n}$ if the remainders of $a$ and $b$ when divided by $n$ are equal. *(blank for work)*
 
-### Uniform Distribution
+**Note:** For every integer $a$, $a \equiv 0 \pmod{n}$, $a \equiv 1 \pmod{n}$, …, or $a \equiv (n - 1) \pmod{n}$. Also, if $a \equiv 1 \pmod{n}$, then $a = nk + 1$ for some $k \in \mathbb{Z}$, etc. *(blank for work)*
 
-The uniform distribution is $f(x) = c$, where $c$ is a constant and the total area under the curve is 1.
+**Result 4.9:** Let $a, b, k$, and $n$ be integers where $n \ge 2$. If $a \equiv b \pmod{n}$, then $ka \equiv kb \pmod{n}$. *(blank for work)*
 
-**Example:** Show that the function below is a pdf.
+**Result 4.10:** Let $a, b, c, d$, and $n$ be integers where $n \ge 2$. If $a \equiv b \pmod{n}$ and $c \equiv d \pmod{n}$, then $a + c \equiv b + d \pmod{n}$. *(blank for work)*
 
-$$f(x) = \begin{cases} 5 & 1 \le x \le 6 \\ 0 & \text{otherwise} \end{cases}$$
+**Result 4.11:** Let $a, b, c, d, n \in \mathbb{Z}$ with $n \ge 2$. If $a \equiv b \pmod{n}$ and $c \equiv d \pmod{n}$, then $ac \equiv bd \pmod{n}$. *(blank for work)*
 
-*(blank for work)*
+## Section 4.3 – Proofs Involving Real Numbers
 
-*(As printed, $5 \cdot (6 - 1) = 25 \ne 1$, so this is not a pdf; the uniform density on $[1, 6]$ is $1/5$. The handout probably meant $f(x) = 1/5$.)*
+> HW: # 26, 30, 34, 36 (On # 34, do not do cases like in the proof of the Triangle Inequality.)
+> (Hint for # 26: Use the idea that if $x \in \mathbb{Z}$ and $x < 9w + 1$, then $x \le 9w$.)
 
-**Example:** Find the probability that $X$ falls between 2 and 4. *(blank for work)*
+Note that the opening paragraph on page 113 lists all facts about real numbers that we understand need no justification.
 
-## Section 4.2 – Expectation and Distribution Parameters
+**Result 4.15:** Let $x \in \mathbb{R}$. If $x^5 - 3x^4 + 2x^3 - x^2 + 4x - 1 \ge 0$, then $x \ge 0$.
 
-> Possible quiz questions: Chapter 4 exercises 15, 24
-> Homework: Chapter 4 exercises 16, 17, 23
+**Proof:** *(blank for work)*
 
-Let $X$ be a continuous random variable with density $f$, and let $H(X)$ be a random variable. The expected value of $H(X)$ is given by
+**Result 4.16:** If $x, y \in \mathbb{R}$, then $\frac{1}{3}x^2 + \frac{3}{4}y^2 \ge xy$.
 
-$$E[H(X)] = \int_{-\infty}^{\infty} H(x)f(x)\,dx$$
+**Proof:** *(blank for work)*
 
-provided that $\int_{-\infty}^{\infty} |H(x)|f(x)\,dx < \infty$.
+**Theorem 4.17:** For all $x, y \in \mathbb{R}$, $|x + y| \le |x| + |y|$. (Triangle Inequality)
 
-In particular, $\mu = E(X) = \int_{-\infty}^{\infty} xf(x)\,dx$.
+**Proof:** *(blank for work)*
 
-**Example:** Find the mean lead concentration in gasoline using the example from section 4.1. *(blank for work)*
+## Section 4.4 – Proofs Involving Sets
 
-**Example:** Find the variance of the lead concentration in gasoline. *(blank for work)*
+> HW: # 40, 42, 46, 85
 
-**Example:** Suppose the density for $X$ is given by $f(x) = e^{-x}$ for $x > 0$. Find the mean. *(blank for work)*
+Recall that to prove $X \subseteq Y$, you assume $x \in X$ and show $x \in Y$. To prove $X = Y$, you must show $X \subseteq Y$ and $Y \subseteq X$. When the sets are "complicated" and using properties of sets is difficult in a proof, we use the method of element-chasing instead.
 
-**Example:** Find the moment generating function for the pdf in the last example and use it to find the mean and variance. *(blank for work)*
+**Result 4.19:** For any sets $A$ and $B$, $A - B = A \cap \overline{B}$.
 
-**Example:** A random variable $X$ with density
+**Proof:** *(blank for work)*
 
-$$f(x) = \frac{1}{\pi}\,\frac{a}{a^2 + (x - b)^2} \qquad x \in \mathbb{R},\ b \in \mathbb{R},\ a > 0$$
+**Example:** (# 44) If $A$ and $B$ are sets such that $A \cup B \ne \emptyset$, then $A \ne \emptyset$ or $B \ne \emptyset$.
 
-has a Cauchy distribution with parameters $a$ and $b$. Letting $a = 1$ and $b = 0$, show that the mean does not exist. *(blank for work)*
+**Proof:** *(blank for work)*
 
-## Section 4.3 – Gamma, Exponential, and Chi-Squared Distributions
+**Example:** (# 45) Let $A = \{n \in \mathbb{Z} \mid n \equiv 1 \pmod{2}\}$ and $B = \{n \in \mathbb{Z} \mid n \equiv 3 \pmod{4}\}$. Then $B \subseteq A$.
 
-> Possible quiz questions: Chapter 4 exercise 25, 38d
-> Homework: Chapter 4 exercise 29, 35, 37, 38
+**Proof:** *(blank for work)*
 
-The gamma function is defined by
+**Result 4.21:** Let $A$ and $B$ be sets. Then $A \cup B = A$ if and only if $B \subseteq A$.
 
-$$\Gamma(\alpha) = \int_0^{\infty} z^{\alpha - 1}e^{-z}\,dz$$
+**Proof:** *(blank for work)*
 
-Some important properties:
+## Section 4.5 – Fundamental Properties of Set Operations
 
-- $\Gamma(1) = 1$
-- $\Gamma(\alpha + 1) = \alpha\Gamma(\alpha)$ for $\alpha > 1$
-- $\Gamma(n + 1) = n!$ for $n \in \mathbb{Z}$
+> HW: # 54 (Use element-chasing), 56 (Use set properties, not element-chasing)
 
-*(The last property is meant for nonnegative integers $n$.)*
+**Theorem 4.22:** Let all sets referred to below be subsets of a universal set $U$. For all sets $A$, $B$, and $C$:
 
-**Example:** Evaluate the integral $\int_0^{\infty} z^3 e^{-z}\,dz$. *(blank for work)*
+1. Commutative Laws: $A \cap B = B \cap A$ and $A \cup B = B \cup A$
+2. Associative Laws: $(A \cap B) \cap C = A \cap (B \cap C)$ and $(A \cup B) \cup C = A \cup (B \cup C)$
+3. Distributive Laws: $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$ and $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$
+4. DeMorgan's Laws: $\overline{A \cup B} = \overline{A} \cap \overline{B}$ and $\overline{A \cap B} = \overline{A} \cup \overline{B}$
 
-**Example:** Evaluate the integral $\int_0^{\infty} A\,x^2 e^{-x/3}\,dx$. Determine the value of $A$ that would make this a probability density function. *(blank for work)*
+**Example:** (# 53) For every three sets $A$, $B$, and $C$, $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$.
 
-### Gamma Distribution
+**Proof:** *(blank for work)*
 
-A random variable $X$ with density
+**Theorem:** Let all sets referred to below be subsets of a universal set $U$. For all sets $A$, $B$, and $C$:
 
-$$f(x) = \frac{1}{\Gamma(\alpha)\beta^{\alpha}}\,x^{\alpha - 1}e^{-x/\beta}$$
+1. Identity Laws: $A \cup \emptyset = A$ and $A \cap U = A$
+2. Complement Laws: $A \cup \overline{A} = U$ and $A \cap \overline{A} = \emptyset$
+3. Double Complement Law: $\overline{\overline{A}} = A$
+4. Idempotent Laws: $A \cap A = A$ and $A \cup A = A$
+5. Universal Bound Laws: $A \cup U = U$ and $A \cap \emptyset = \emptyset$
+6. Absorption Laws: $A \cup (A \cap B) = A$ and $A \cap (A \cup B) = A$
+7. Complements of $U$ and $\emptyset$: $\overline{U} = \emptyset$ and $\overline{\emptyset} = U$
+8. Set Difference Law: $A - B = A \cap \overline{B}$
 
-where $x > 0$, $\alpha > 0$, $\beta > 0$ is said to have a gamma distribution with parameters $\alpha$ and $\beta$.
+**Example:** Use properties of sets (not element-chasing) to show: For all sets $A$ and $B$, $\overline{\overline{B} \cup (\overline{B} - A)} = B$.
 
-**Example:** Find the moment generating function for the gamma distribution. *(blank for work)*
+**Proof:** *(blank for work)*
 
-**Example:** Use the moment generating function to find the mean and variance of the gamma distribution. *(blank for work)*
+## Section 4.6 – Proofs Involving Cartesian Products of Sets
 
-### Exponential Distribution
+> HW: # 68, 70, 88
+> (In # 70, pick specific sets for $A$ and $B$. Then compute $\overline{A \times B}$ and $\overline{A} \times \overline{B}$ and show they are not the same.)
 
-An exponential random variable is a gamma random variable with $\alpha = 1$. The pdf for an exponential random variable is
+**Example:** (# 67) For all sets $A$, $B$, and $C$, $A \times (B \cap C) = (A \times B) \cap (A \times C)$.
 
-$$f(x) = \frac{1}{\beta}e^{-x/\beta} \qquad x > 0,\ \beta > 0$$
+**Proof:** *(blank for work)*
 
-**Example:** Sketch the graph of an exponential random variable. *(blank for work)*
+**Result 4.25:** For all sets $A$, $B$, and $C$, $A \times (B - C) = (A \times B) - (A \times C)$.
 
-**Theorem:** Consider a Poisson process with parameter $\lambda$. Let $W$ denote the time of the occurrence of the first event. $W$ has an exponential distribution with $\beta = \frac{1}{\lambda}$.
+**Proof:** *(blank for work)*
 
-Proof: *(blank for work)*
+**Example:** (# 69) Let $A$, $B$, $C$, and $D$ be sets. Then $(A \times B) \cup (C \times D) \subseteq (A \cup C) \times (B \cup D)$.
 
-**Example:** The mean number of killer particles emitted by a killer paramecium is 1 every 5 hours. In observing such a paramecium, what is the probability that we must wait at most 4 hours before the first particle is emitted? *(blank for work)*
+**Proof:** *(blank for work)*
 
-### Chi-Squared Distribution
+**Example:** (# 65) Let $A$, $B$, and $C$ be nonempty sets. Then $A \times C \subseteq B \times C$ if and only if $A \subseteq B$.
 
-Let $X$ be a gamma random variable with $\beta = 2$ and $\alpha = \frac{\gamma}{2}$ where $\gamma$ is a positive integer. $X$ is said to have a chi-squared distribution with $\gamma$ degrees of freedom. We denote this variable by $\chi^2_{\gamma}$.
-
-**Example:** Sketch the graph of the chi-squared distribution. *(blank for work)*
-
-### Chi-Squared Distribution Table
-
-The columns of the chi-squared table correspond to the area to the left of the chi-squared critical value, and the rows correspond to the degrees of freedom $\gamma$.
-
-Notation: We use $\chi^2_r$ to denote the chi-squared value with area $r$ to the right, so the tail area we're looking up on the table is the area $1 - r$ to the left.
-
-**Example:** For $\gamma = 14$, find the following:
-
-- $\chi^2_{0.005}$
-- $\chi^2_{0.995}$
-- $P(\chi^2 > 19.8)$
-- $P(\chi^2 < 9.3)$
-- $P(4.11 < \chi^2 < 27.7)$
-
-*(blank for work)*
-
-## Section 4.4 – Normal Distribution
-
-> Possible quiz questions: Chapter 4 exercises 39, 43
-> Homework: Chapter 4 exercises 40, 42
-
-A random variable $X$ with density
-
-$$f(x) = \frac{1}{\sqrt{2\pi}\,\sigma}e^{-(x-\mu)^2/2\sigma^2} \qquad x \in \mathbb{R},\ \mu \in \mathbb{R},\ \sigma > 0$$
-
-is said to have a normal distribution with parameters $\mu$ and $\sigma$, where $\mu$ is the mean and $\sigma$ is the standard deviation of the normal distribution.
-
-The moment generating function for $X$ is
-
-$$m_X(t) = e^{\mu t + \sigma^2 t^2/2}$$
-
-**Example:** Show that the mean of the normal random variable $X$ with parameters $\mu$ and $\sigma$ is $\mu$ and that the variance is $\sigma^2$. *(blank for work)*
-
-**Example:** The number of grams of hydrocarbons emitted by an automobile per mile is approximately normally distributed with a mean of 1 gram and a standard deviation of 0.25 grams.
-
-- Sketch the graph of this distribution. *(blank for work)*
-- Explain why the distribution is "approximately normal" rather than normal. *(blank for work)*
-
-### Standard Normal Distribution
-
-We can't integrate the pdf for the normal distribution for most intervals and have to find probabilities numerically. These probabilities can be compiled into a table of values for everyday use. However, we would need a different table for every combination of $\mu$ and $\sigma$. We use the standard normal distribution so that we only need one table.
-
-The standard normal distribution has a mean of 0 and a standard deviation of 1. We can convert any normal distribution to a standard normal distribution.
-
-Let $X$ be a normal random variable with mean $\mu$ and standard deviation $\sigma$. The variable
-
-$$Z = \frac{X - \mu}{\sigma}$$
-
-is a standard normal random variable.
-
-**Example:** Let $X$ denote the number of grams of hydrocarbons emitted by an automobile per mile. Assuming that $X$ is normal with $\mu = 1$ gram and $\sigma = 0.25$ gram, find the probability that a randomly selected automobile will be between 0.9 and 1.54 grams. *(blank for work)*
-
-### Using the Standard Normal Table
-
-Find the ones and tenths place of your z-score on the left side of the table (the row heading). Then find the hundredths place of the z-score on the top row (the column heading). The entry in that row and column is the probability that a randomly chosen value will fall below your z-score.
-
-- $P(Z < 1.42)$
-- $P(Z > 0.51)$
-- $P(Z < -0.51)$
-- $P(-0.13 < Z < 2.4)$
-- $P(Z < 3.99)$
-
-*(blank for work)*
-
-Notation: $z_r$ denotes the z-score with an area of $r$ to the right of it.
-
-**Example:** Let $X$ denote the amount of radiation that can be absorbed by an individual before death ensues. Assume that $X$ is normal with a mean of 500 roentgens and a standard deviation of 150 roentgens. Above what dosage level will only 5% of those exposed survive? *(blank for work)*
-
-**Example:** Find $z_0$ in each case.
-
-- $P(Z < z_0) = 0.2413$
-- $P(Z > z_0) = 0.1382$
-- $P(-z_0 < Z < z_0) = 0.9000$
-- $P(-1.28 < Z < z_0) = 0.74$
-
-*(blank for work)*
-
-## Section 4.5 – Normal Probability Rule and Chebyshev's Inequality
-
-> Possible quiz questions: Chapter 4 exercise 47
-> Homework: Chapter 4 exercises 48
-
-The normal probability rule gives us a way to quickly decide which values of the random variable $X$ are common or uncommon.
-
-### Normal probability rule
-
-Let $X$ be normally distributed with parameters $\mu$ and $\sigma$. Then
-
-$$P(\mu - \sigma < X < \mu + \sigma) \approx 0.68$$
-$$P(\mu - 2\sigma < X < \mu + 2\sigma) \approx 0.95$$
-$$P(\mu - 3\sigma < X < \mu + 3\sigma) \approx 0.997$$
-
-In other words, there is about a 68% chance a randomly chosen value is within one standard deviation of the mean, 95% chance it's within two standard deviations, and 99.7% chance it's within three standard deviations.
-
-Proof: *(blank for work)*
-
-**Example:** Let $X$ denote the amount of radiation that can be absorbed by an individual before death ensues. Assume that $X$ is normal with a mean of 500 roentgens and a standard deviation of 150 roentgens. Between what two values can the center 65% of measurements be found? The center 95%? *(blank for work)*
-
-### Chebyshev's inequality
-
-Let $X$ be a random variable with mean $\mu$ and standard deviation $\sigma$. Then for any positive number $k$,
-
-$$P[|X - \mu| < k\sigma] \ge 1 - \frac{1}{k^2}$$
-
-Notice that there is no requirement of normality.
-
-**Example:** Find the probabilities that a randomly chosen value will fall within one standard deviation of the mean, two standard deviations of the mean, and three standard deviations of the mean using Chebyshev's inequality. Compare these probabilities with the probabilities given in the normal probability rule. *(blank for work)*
-
-**Example:** Let $X$ represent the millions of staffing hours worked in a plant without a serious accident ($\mu = 2$, $\sigma = 0.1$). A serious accident has just occurred. Would it be unusual for the next serious accident to occur within the next 1.6 million staffing hours? *(blank for work)*
-
-## Section 4.6 – Normal Approximation to the Binomial Distribution
-
-> Possible quiz questions: Chapter 4 exercise 52
-> Homework: Chapter 4 exercises 54ab, 56
-
-Let $X$ be binomial with parameters $n$ and $p$. For large $n$, $X$ is approximately normal with mean $np$ and variance $npq$.
-
-This fact helps us to make approximations when tables and calculators are not available. In this case, "large" means a large enough $n$ such that $np > 5$ and $n(1 - p) > 5$.
-
-### Half-unit correction
-
-Because we're using a continuous distribution to approximate a discrete distribution, we have to make some sort of correction to avoid the problem of finding $P(X = x)$. This value is always 0 for a continuous distribution but we expect it not to be for the discrete distribution.
-
-The following shows the graph of a binomial distribution. *(blank for a graph)*
-
-We make a half-unit correction in order to account for differences between the discrete and continuous distributions. We find the z-score for either $x - 0.5$ or $x + 0.5$, depending on which value will include the entire bar for $x$.
-
-| Binomial | Normal approximation |
-|---|---|
-| $P(X = a)$ | $P(a - 0.5 < X < a + 0.5)$ |
-| $P(X \ge a)$ | $P(X > a - 0.5)$ |
-| $P(X \le a)$ | $P(X < a + 0.5)$ |
-| $P(X > a)$ | $P(X > a + 0.5)$ |
-| $P(X < a)$ | $P(X < a - 0.5)$ |
-
-**Example:** Let $X$ be binomial with $n = 20$ and $p = 0.4$. What is the probability that there will be 12 or more successes? *(blank for work)*
+**Proof:** *(blank for work)*

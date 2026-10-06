@@ -1,34 +1,54 @@
-# Section 3.5
+# Section 3.5 – Proof Evaluations
 
-## 36 (a–d)
+*Exercise text copied from photos of the textbook's Section 3.5 Exercises (page 101 and the page before it). Homework: 42, 44, 46.*
 
-Let $X$ be binomial with parameters $n = 15$ and $p = .2$.
+## 42
 
-- (a) Find the expression for the density for $X$.
-- (b) Find the expression for the moment generating function for $X$.
-- (c) Find $E[X]$ and $\operatorname{Var} X$.
-- (d) Find $E[X]$, $E[X^2]$, and $\operatorname{Var} X$ using the moment generating function, thus verifying your answer to part (c) of this exercise.
+Below is given a proof of a result. Which result is being proved?
 
-## 37
+***Proof*** Assume that $x$ is even. Then $x = 2a$ for some integer $a$. So,
 
-Albino rats used to study the hormonal regulation of a metabolic pathway are injected with a drug that inhibits body synthesis of protein. The probability that a rat will die from the drug before the experiment is over is $.2$. If 10 animals are treated with the drug, how many are expected to die before the experiment ends? What is the probability that at least eight will survive? Would you be surprised if at least five died during the course of the experiment? Explain, based on the probability of this occurring.
+$$3x^2 - 4x - 5 = 3(2a)^2 - 4(2a) - 5 = 12a^2 - 8a - 5 = 2(6a^2 - 4a - 3) + 1.$$
 
-## 42 (a, b)
+Since $6a^2 - 4a - 3$ is an integer, $3x^2 - 4x - 5$ is odd.
 
-It is possible for a computer to pick up an erroneous signal that does not show up as an error on the screen. The error is called a silent paging error. A particular terminal is defective, and when using the system word processor, it introduces a silent paging error with probability $.1$. The word processor is used 20 times during a given week.
+For the converse, assume that $x$ is odd. So, $x = 2b + 1$, where $b \in \mathbb{Z}$. Therefore,
 
-- (a) Find the probability that no silent paging errors occur.
-- (b) Find the probability that at least one such error occurs.
+$$
+\begin{aligned}
+3x^2 - 4x - 5 &= 3(2b + 1)^2 - 4(2b + 1) - 5 = 3(4b^2 + 4b + 1) - 8b - 4 - 5 \\
+&= 12b^2 + 4b - 6 = 2(6b^2 + 2b - 3).
+\end{aligned}
+$$
 
-## 43 (b, c)
+Since $6b^2 + 2b - 3$ is an integer, $3x^2 - 4x - 5$ is even. ∎
 
-*Setup from part (a), which isn't assigned:* $m_X(t)$ is the moment generating function for a binomial random variable with parameters $n$ and $p$.
+## 44
 
-- (b) Use $m_X(t)$ to show that $E[X] = np$.
-- (c) Use $m_X(t)$ to show that $E[X^2] = n^2p^2 - np^2 + np$.
+Evaluate the proof of the following result.
 
-## 44 (a)
+**Result** Let $a, b \in \mathbb{Z}$. Then $a - b$ is even if and only if $a$ and $b$ are of the same parity.
 
-Assume that each time a metal detector at an airport signals, there is a 25% chance that the cause is change in the passenger's pocket. During a given hour, 15 passengers are stopped because of a signal from the metal detector.
+***Proof*** We consider two cases.
 
-- (a) Find the probability that at least 3 persons will have been stopped due to change in their pockets.
+Case 1. *$a$ and $b$ are of the same parity.* We now consider two subcases.
+
+Subcase 1.1. *$a$ and $b$ are both even.* Then $a = 2x$ and $b = 2y$, where $x, y \in \mathbb{Z}$. Then $a - b = 2x - 2y = 2(x - y)$. Since $x - y$ is an integer, $a - b$ is even.
+
+Subcase 1.2. *$a$ and $b$ are both odd.* Then $a = 2x + 1$ and $b = 2y + 1$, where $x, y \in \mathbb{Z}$. Then $a - b = (2x + 1) - (2y + 1) = 2(x - y)$. Since $x - y$ is an integer, $a - b$ is even.
+
+Case 2. *$a$ and $b$ are of opposite parity.* We again have two subcases.
+
+Subcase 2.1. *$a$ is odd and $b$ is even.* Then $a = 2x + 1$ and $b = 2y$, where $x, y \in \mathbb{Z}$. Then $a - b = (2x + 1) - 2y = 2(x - y) + 1$. Since $x - y$ is an integer, $a - b$ is odd.
+
+Subcase 2.2. *$a$ is even and $b$ is odd.* Then $a = 2x$ and $b = 2y + 1$, where $x, y \in \mathbb{Z}$. Then $a - b = 2x - (2y + 1) = 2x - 2y - 1 = 2(x - y - 1) + 1$. Since $x - y - 1$ is an integer, $a - b$ is odd. ∎
+
+## 46
+
+Given below is a proof of a result. What is the result?
+
+***Proof*** Assume, without loss of generality, that $x$ and $y$ are even. Then $x = 2a$ and $y = 2b$ for integers $a$ and $b$. Therefore,
+
+$$xy + xz + yz = (2a)(2b) + (2a)z + (2b)z = 2(2ab + az + bz).$$
+
+Since $2ab + az + bz$ is an integer, $xy + xz + yz$ is even. ∎
