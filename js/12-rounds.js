@@ -10,7 +10,7 @@ async function startRound(short, paper = false, quick = false, own = false, pen 
   await mathBoot
   let queue = []
   if (isPenRound(short)) {
-    round = { short, paper: false, quick, pen: true, queue: penRound(quick), at: 0, combo: 0, best: 0, misses: 0, marks: [] }
+    round = { short, paper: false, quick, pen: true, queue: penRound(quick, short), at: 0, combo: 0, best: 0, misses: 0, marks: [] }
     showQuestion()
     return
   }

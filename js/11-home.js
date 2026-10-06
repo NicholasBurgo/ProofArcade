@@ -172,10 +172,10 @@ function arcadeBlock() {
   const ctaText = h('span')
   ctaText.append(h('small', '', `Next up · ${placeOf(lit)}`), h('strong', '', lit))
   cta.append(ctaText, h('span', 'go', '→'))
+  // the study list first: what those who took the test say is on it (js/37d)
+  studyBlock()
   cta.addEventListener('click', () => openCard(lit))
   view.append(cta)
-  // the test's derivations, written out with the pen (js/37c)
-  view.append(penCta())
   // the fundamentals, then one block per section (its number, its title), then the mixes
   WORLDS.forEach(w => {
     const sec = h('section', 'world' + (w.sec ? ' arc-sec' : ''))
@@ -216,7 +216,7 @@ function openCard(short) {
   cardLevel = short
   view.replaceChildren()
   const sheet = h('section', 'sheet')
-  sheet.append(h('div', 'eyebrow', `${isShuffledQuiz(short) ? 'Quiz questions' : isPenRound(short) ? 'Written like the test' : placeOf(short)} · The idea`))
+  sheet.append(h('div', 'eyebrow', `${studyPlace(short) ?? (isShuffledQuiz(short) ? 'Quiz questions' : isPenRound(short) ? 'Written like the test' : placeOf(short))} · The idea`))
   sheet.append(h('h2', '', short))
   const ul = h('ul', 'points')
   if (isTree(short)) {
@@ -279,7 +279,10 @@ function openCard(short) {
   pen.type = 'button'
   pen.append(document.createTextNode('Pen mode'), h('span', 'mode', 'write it out, then check'))
   pen.addEventListener('click', () => startRound(short, false, false, false, true))
-  if (isPenRound(short)) acts.append(go, quick, back)
+  if (short === PEN_ROUND) acts.append(go, quick, back)
+  // one derivation: three to write, and one to watch first (js/37c)
+  else if (isPenRound(short)) acts.append(go, penWatchButton(short, sheet), back)
+  else if (isStudySheet(short)) acts.append(go, quick, learn, back)
   else if (isReview(short) || isTree(short) || isParam(short)) acts.append(go, quick, learn, paper, back)
   else acts.append(go, quick, learn, pen, paper, back)
   sheet.append(acts)

@@ -61,3 +61,9 @@
 .boss:hover { border-style: solid; }
 .boss .boss-title { font-family: var(--display); font-weight: 800; font-size: 1.6rem; text-transform: uppercase; color: var(--gold); line-height: 1; }
 .boss b { color: var(--ink); }
+/* the study list: first on the home screen, in gold */
+.study-intro { margin: 22px 0 4px; }
+.study-intro h2 { margin: 0; font-family: var(--display); font-weight: 800; font-size: 1.8rem; text-transform: uppercase; color: var(--gold); letter-spacing: 0.02em; }
+.study-intro p { margin: 4px 0 0; color: var(--muted); }
+.world.study .world-head { border-bottom-color: var(--gold); }
+.world.study .world-head h2 { color: var(--gold); font-size: 1.3rem; }

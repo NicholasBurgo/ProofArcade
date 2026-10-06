@@ -188,7 +188,7 @@ function finish() {
   // (a quiz question's level goes on to the next quiz question, and back to their list)
   const quizL = isQuizLevel(r.short) ? QUIZ_LEVELS[r.short] : null
   const i = ORDER.indexOf(r.short)
-  const nextShort = quizL ? quizLevelAfter(r.short) : ORDER[(i + 1) % ORDER.length]
+  const nextShort = studyAfter(r.short) ?? (quizL ? quizLevelAfter(r.short) : ORDER[(i + 1) % ORDER.length])
   const again = h('button', stars < 3 || r.own ? 'btn' : 'btn ghost', 'Run it again')
   again.type = 'button'
   again.addEventListener('click', () => (r.own ? startRound(r.short, false, false, true) : startRound(r.short, false, false, false, Boolean(r.pen))))

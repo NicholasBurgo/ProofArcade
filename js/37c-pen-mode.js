@@ -44,11 +44,55 @@ const PEN_SLOTS = [
     ...['continuous-expectation:mean', 'continuous-expectation:variance', 'continuous-expectation:second-moment'].map(k => penKind(k, 'Mean and variance from a pdf')),
   ]),
 ]
+// one derivation at a time (the study list's second part): its slot, its level (for the
+// videos), and the steps to write (for the card)
+const PEN_ONE = {
+  'Write it: the geometric MGF': { slot: 0, level: 'Geometric MGF', steps: ['m(t) = Σ eᵗˣ qˣ⁻¹p over x = 1, 2, 3, …', 'Pull out peᵗ: what is left, Σ (qeᵗ)ˣ⁻¹, is a geometric series with r = qeᵗ (the sheet has its sum, a/(1 − r)).', 'So m(t) = peᵗ/(1 − qeᵗ), and it exists for qeᵗ < 1, that is t < −ln q.'] },
+  'Write it: a continuous MGF': { slot: 1, level: 'Continuous MGF', steps: ['m(t) = ∫ eᵗˣ f(x) dx over where f isn’t 0.', 'Combine the exponents, then integrate: the key integral ∫₀^∞ e^(−cx) dx = 1/c, the gamma integral, or ∫ eᵗˣ dx for a uniform.', 'Exponential: 1/(1 − βt) for t < 1/β. Gamma: (1 − βt)^(−α). Uniform: (eᵇᵗ − eᵃᵗ)/((b − a)t).'] },
+  'Write it: E[X] and Var X from an MGF': { slot: 2, level: 'Mean and variance from an MGF', steps: ['E[X] = m′(0): differentiate, then put t = 0.', 'E[X²] = m″(0): differentiate again, then t = 0.', 'Var X = m″(0) − m′(0)², and σ is its square root.'] },
+  'Write it: pdf → cdf': { slot: 3, level: 'pdf ↔ cdf', steps: ['F(x) = ∫ from where f starts up to x of f(t) dt (t inside, x the top limit).', 'Write all three pieces: 0 before f starts, the integral’s formula on its range, 1 after it ends.', 'Check: F at the right end is 1.'] },
+  'Write it: cdf → pdf': { slot: 4, level: 'pdf ↔ cdf', steps: ['f(x) = F′(x): differentiate the middle piece of F.', 'The flat pieces (0 and 1) give f(x) = 0 there.', 'Write f with its range: the formula on it, 0 otherwise.'] },
+  'Write it: the geometric cdf': { slot: 8, level: 'Geometric cdf', steps: ['F(x) = P[X ≤ x] = Σ from k = 1 to x of qᵏ⁻¹p.', 'That is a finite geometric series (on the sheet): a = p, r = q, x terms, so p(1 − qˣ)/(1 − q).', 'And 1 − q = p, so F(x) = 1 − qˣ. Then P[X ≥ 2] = 1 − F(1) = q.'] },
+  'Write it: the uniform pdf': { slot: 6, level: 'Uniform pdf', steps: ['Uniform means flat: f(x) = c on (a, b), 0 elsewhere.', 'Its area is a rectangle: c(b − a) = 1, so c = 1/(b − a).', 'Then F(x) = (x − a)/(b − a) on (a, b), E[X] = (a + b)/2, Var X = (b − a)²/12.'] },
+  'Write it: the negative binomial pdf': { slot: 5, level: 'Negative binomial pdf', steps: ['X = x means trial x is the r-th success: split it into the first x − 1 trials, then trial x.', 'f(x) = P[r − 1 successes in x − 1 trials] · p = C(x − 1, r − 1)pʳ⁻¹qˣ⁻ʳ · p.', 'So f(x) = C(x − 1, r − 1)pʳqˣ⁻ʳ for x = r, r + 1, … (it is not on the sheet). E[X] = r/p.'] },
+}
+for (const [name, one] of Object.entries(PEN_ONE)) {
+  PEN_LEVEL_NAMES.add(name)
+  CARDS[name] = [...one.steps, `${PEN_ONE_SIZE} to write with the pen, new numbers each time. Tap Show the work to check each one; a miss comes back at the end.`]
+}
 // a round: every slot once, in a random order; a quick one: an MGF, a pdf ↔ cdf, the
-// negative binomial or uniform pdf, and one more
-function penRound(quick = false) {
+// negative binomial or uniform pdf, and one more. One derivation: its slot three times.
+function penRound(quick = false, short = PEN_ROUND) {
+  if (PEN_ONE[short]) return Array.from({ length: PEN_ONE_SIZE }, () => ({ ...PEN_SLOTS[PEN_ONE[short].slot](), seen: 0, missed: false }))
   const slots = quick ? [pickOne([0, 1]), pickOne([3, 4]), pickOne([5, 6]), pickOne([2, 7, 8, 9])].map(i => PEN_SLOTS[i]) : PEN_SLOTS
   return shuffleArr(slots).map(make => ({ ...make(), seen: 0, missed: false }))
+}
+// a derivation's videos are its level's
+for (const [name, one] of Object.entries(PEN_ONE)) if (LEVEL_VIDEOS[one.level]) LEVEL_VIDEOS[name] = LEVEL_VIDEOS[one.level]
+
+// "Watch one first" on a derivation's card: one with new numbers, its worked answer played
+function penWatchButton(short, sheet) {
+  const b = h('button', 'btn ghost', 'Watch one first')
+  b.type = 'button'
+  b.addEventListener('click', () => {
+    sheet.querySelector(':scope > .pen-example')?.remove()
+    const ex = penExample(PEN_SLOTS[PEN_ONE[short].slot])
+    sheet.append(ex)
+    ex.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'nearest' })
+    b.textContent = 'Watch another'
+  })
+  return b
+}
+function penExample(make) {
+  const { p, level } = make()
+  const box = h('div', 'howto-body pen-example')
+  box.append(h('div', 'eyebrow', 'Watch one · new numbers · doesn’t count'))
+  if (p.ask) box.append(h('p', 'ask', p.ask))
+  if (p.text) box.append(h('p', 'story', p.text))
+  if (p.latex) box.append(tex(p.latex))
+  const b = p.build ?? p.mgf?.build
+  box.append(b ? mgfPlayer(b, { auto: true }) : p.plug && p.vars ? plugPanel(p, { auto: true }) : workPanel(p, { auto: true, level }))
+  return box
 }
 
 CARDS[PEN_ROUND] = [
@@ -58,17 +102,6 @@ CARDS[PEN_ROUND] = [
   'The test’s formula sheet has no names on it. Open Formulas and tap Hide the names to read it that way.',
 ]
 LEVEL_VIDEOS[PEN_ROUND] = ['mgfIntro', 'geoMgf', 'expMgf', 'contProb']
-
-// on the home screen, under Next up
-function penCta() {
-  const b = h('button', 'cta')
-  b.type = 'button'
-  const t = h('span')
-  t.append(h('small', '', 'Written like the test · with the pen'), h('strong', '', `${PEN_ROUND} · ${PEN_SIZE} questions`))
-  b.append(t, h('span', 'go', '→'))
-  b.addEventListener('click', () => openCard(PEN_ROUND))
-  return b
-}
 
 // The question in pen mode: Show the work on the button row (with Hint, the video and
 // Skip), the hint under a veil (opening it moves nothing you wrote: the ink stays where it
