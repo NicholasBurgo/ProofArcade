@@ -288,7 +288,11 @@ mark.pvmark { background: color-mix(in srgb, currentColor 16%, transparent); bor
 .tally b { display: block; font-family: var(--display); font-size: 1.9rem; color: var(--ink); font-variant-numeric: tabular-nums; line-height: 1.1; }
 /* pen mode: room to write the whole answer, the hint under a veil (opening it moves nothing
    written), and the two buttons you grade yourself with */
-.pen-space { min-height: 70vh; margin-top: 14px; padding: 10px 14px; border: 1.5px dashed var(--rule-soft); border-radius: 12px; }
+.pen-space { min-height: 100vh; margin-top: 14px; }
+/* until Show the work, the page ends at its buttons: the worked answer goes in under them,
+   so writing past them would end up under the worked answer */
+#view:has(.pen-space:not(.pen-shown))::after { display: none; }
 .pen-note { margin: 0; color: var(--muted); font-size: 0.85rem; }
+.pen-end { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; margin-top: 10px; }
 .first-move.pen-veil { filter: blur(5px); opacity: 0.5; user-select: none; pointer-events: none; }
 .pen-grade { display: inline-flex; flex-wrap: wrap; gap: 8px; }

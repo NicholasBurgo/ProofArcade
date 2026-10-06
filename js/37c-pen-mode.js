@@ -72,23 +72,37 @@ function penCta() {
 
 // The question in pen mode: Show the work on the button row (with Hint, the video and
 // Skip), the hint under a veil (opening it moves nothing you wrote: the ink stays where it
-// was put), then the page to write on. The worked answer goes under it.
+// was put), then a whole screen of blank page to write on (the pen writes anywhere, the
+// question and the margins too), with Show the work again at the bottom, where the writing
+// ends, and More room for a long one. The worked answer goes under it.
 function penQuestion(p, sheet, q) {
   if (p.start) sheet.append(penHint(p))
   const show = h('button', 'btn pen-show', 'Show the work')
   show.type = 'button'
   show.title = 'Write your answer first: this plays the worked answer to check it against'
   const space = h('div', 'pen-space')
-  space.append(h('p', 'pen-note', 'Write the whole answer here with the pen, every line, like on the test. Then tap Show the work.'))
-  show.addEventListener('click', () => {
+  space.append(h('p', 'pen-note', 'Write anywhere on the page with the pen, every line, like on the test.'))
+  const end = h('div', 'pen-end')
+  const more = h('button', 'btn ghost', 'More room')
+  more.type = 'button'
+  more.addEventListener('click', () => {
+    space.style.minHeight = space.offsetHeight + Math.round(innerHeight * 0.6) + 'px'
+  })
+  const show2 = h('button', 'btn', 'Show the work')
+  show2.type = 'button'
+  end.append(more, show2)
+  const reveal = () => {
     if (round.locked) return
     round.locked = true
-    show.disabled = true
+    show.disabled = show2.disabled = more.disabled = true
+    space.classList.add('pen-shown')
     const work = penWork(p, sheet, q)
     sheet.append(work)
     work.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'nearest' })
-  })
-  sheet.append(show, space)
+  }
+  show.addEventListener('click', reveal)
+  show2.addEventListener('click', reveal)
+  sheet.append(show, space, end)
   view.append(sheet)
   window.scrollTo({ top: 0 })
 }
