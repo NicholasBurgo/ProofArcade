@@ -4,39 +4,30 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>body { margin: 0; } [hidden] { display: none !important; } img { max-width: 100%; }</style>
-<title>Math 3800 Arcade</title>
+<title>Proof Arcade</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Big+Shoulders+Display:wght@700;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Big+Shoulders+Display:wght@700;800&family=Caveat:wght@600;700&family=IBM+Plex+Mono:wght@500;600&family=STIX+Two+Text:ital,wght@0,400;0,700;1,400&display=swap">
 <link rel="stylesheet" href="css/01-base.css">
 <link rel="stylesheet" href="css/02-hud.css">
-<link rel="stylesheet" href="css/03-map.css">
-<link rel="stylesheet" href="css/04-written-answers.css">
-<link rel="stylesheet" href="css/05-tree.css">
-<link rel="stylesheet" href="css/06-sheet.css">
-<link rel="stylesheet" href="css/07-overlays.css">
-<link rel="stylesheet" href="css/08-quiz.css">
-<link rel="stylesheet" href="css/09-work-panel.css">
-<link rel="stylesheet" href="css/09b-dropdowns.css">
-<link rel="stylesheet" href="css/09c-plug-levels.css">
+<link rel="stylesheet" href="css/03-home.css">
+<link rel="stylesheet" href="css/04-sheet.css">
+<link rel="stylesheet" href="css/05-page.css">
+<link rel="stylesheet" href="css/06-proofs.css">
+<link rel="stylesheet" href="css/07-check.css">
+<link rel="stylesheet" href="css/08-ask.css">
+<link rel="stylesheet" href="css/09-marks.css">
 </head>
 <body>
 <div class="app">
   <header class="hud">
-    <button class="wordmark" id="home" type="button">Math 3800 Arcade</button>
+    <button class="wordmark" id="home" type="button">Proof Arcade</button>
     <div class="tools">
-      <button class="tool" id="open-calc" type="button" aria-pressed="false">Calc</button>
-      <button class="tool" id="open-ready" type="button">Weak spots</button>
-      <button class="tool" id="open-tables" type="button" aria-pressed="false">Tables</button>
-      <button class="tool" id="open-sheet" type="button">Formulas</button>
       <button class="tool" id="sound" type="button" aria-pressed="true">Sound</button>
     </div>
   </header>
   <main id="view"><p class="loading">Shuffling the deck…</p></main>
 </div>
-<div class="overlay" id="overlay" hidden></div>
-<div class="calc" id="calc" role="dialog" aria-label="Calculator" hidden></div>
-<div class="tables-pop" id="tables-pop" role="dialog" aria-label="Tables" hidden></div>
 <canvas id="fx" aria-hidden="true"></canvas>
 <canvas id="ink" aria-hidden="true"></canvas>
 <div class="ink-tools" id="ink-tools" hidden>
@@ -46,75 +37,32 @@
 
 <script>
 window.MathJax = {
+  // html: \class, to underline where a checked proof went wrong in the worked one (js/08)
+  loader: { load: ['[tex]/html'] },
+  tex: { packages: { '[+]': ['html'] } },
   startup: { typeset: false },
   options: { enableMenu: false },
   svg: { fontCache: 'local' },
 }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg-full.js"></script>
-<script src="engine.js"></script>
-<script src="homework/core.js"></script>
-<script src="homework/g1-discrete-pdfs-cdfs-mgfs.js"></script>
-<script src="homework/g2a-binomial-negbin.js"></script>
-<script src="homework/g2b-hyper-poisson.js"></script>
-<script src="homework/g3-continuous-pdfs-cdfs.js"></script>
-<script src="homework/g4a-continuous-mean-var-mgf.js"></script>
-<script src="homework/g4b-gamma.js"></script>
-<script src="homework/g5-poisson-waiting-time.js"></script>
-<script src="homework/g6-chi-squared-normal.js"></script>
-<script src="homework/g7-gaps.js"></script>
-<script src="homework/quiz.js"></script>
 <script src="js/01-setup.js"></script>
-<script src="js/02-sections-and-levels.js"></script>
-<script src="js/03-cards.js"></script>
-<script src="js/04-progress.js"></script>
-<script src="js/05-readiness.js"></script>
-<script src="js/06-sound.js"></script>
-<script src="js/07-confetti.js"></script>
-<script src="js/08-ink.js"></script>
-<script src="js/08b-overlay-ink.js"></script>
-<script src="js/09-math.js"></script>
-<script src="js/10-hud.js"></script>
-<script src="js/11-home.js"></script>
-<script src="js/12-rounds.js"></script>
-<script src="js/13-answer-choices.js"></script>
-<script src="js/14-question.js"></script>
-<script src="js/15-pick.js"></script>
-<script src="js/16-written-answers.js"></script>
-<script src="js/17-arcade-challenge.js"></script>
-<script src="js/18-tree.js"></script>
-<script src="js/19-plug.js"></script>
-<script src="js/20-pieces.js"></script>
-<script src="js/21-table-look.js"></script>
-<script src="js/22-distribution-graph.js"></script>
-<script src="js/23-question-graphs.js"></script>
-<script src="js/24-plug-panel.js"></script>
-<script src="js/24b-plug-stories.js"></script>
-<script src="js/24c-plug-levels.js"></script>
-<script src="js/25-tree-stories.js"></script>
-<script src="js/26-tree-walk.js"></script>
-<script src="js/27-read-pdf-mgf.js"></script>
-<script src="js/28-build-mgf.js"></script>
-<script src="js/28b-build-as-one.js"></script>
-<script src="js/29-read-off-numbers.js"></script>
-<script src="js/30-tree-questions.js"></script>
-<script src="js/31-work-panel.js"></script>
-<script src="js/31b-work-numbers.js"></script>
-<script src="js/31c-work-pieces.js"></script>
-<script src="js/32-table-cards.js"></script>
-<script src="js/32b-videos.js"></script>
-<script src="js/33-quiz-player.js"></script>
-<script src="js/34-quiz-screens.js"></script>
-<script src="js/35-practice-quiz.js"></script>
-<script src="js/36-skills.js"></script>
-<script src="js/37-slices.js"></script>
-<script src="js/37b-quiz-levels.js"></script>
-<script src="js/37c-pen-mode.js"></script>
-<script src="js/37d-study-list.js"></script>
-<script src="js/38-tables-and-sheet.js"></script>
-<script src="js/39-wiring.js"></script>
-<script src="js/40-calculator.js"></script>
-<script src="js/41-boot.js"></script>
+<script src="js/02-progress.js"></script>
+<script src="js/03-sound.js"></script>
+<script src="js/04-confetti.js"></script>
+<script src="js/05-ink.js"></script>
+<script src="js/06-math.js"></script>
+<script src="js/07-hud.js"></script>
+<script src="js/08-proofs.js"></script>
+<script src="js/09-home.js"></script>
+<script src="js/10-rounds.js"></script>
+<script src="js/11-question.js"></script>
+<script src="js/12-pen-mode.js"></script>
+<script src="js/13-results.js"></script>
+<script src="js/14-check-writing.js"></script>
+<script src="js/14b-ask.js"></script>
+<script src="js/14c-marks.js"></script>
+<script src="js/15-boot.js"></script>
 
 </body>
 </html>

@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 # Serves this folder to the local network (your tablet), telling browsers to
-# check for a newer copy every time, so updates show up on a plain refresh.
-#   python3 serve.py          -> http://<this computer's IP>:8380
+# check for a newer copy every time, so updates show up on a plain refresh, and hands
+# /grade/ to grader.py (Check my writing: this computer and the tailnet only).
+#   python3 serve.py          -> http://<this computer's IP>:8230
 #   python3 serve.py 9000     -> a different port
 import functools
 import http.server
 import pathlib
 import sys
 import urllib.parse
+
+import grader
 
 
 class NoCache(http.server.SimpleHTTPRequestHandler):
@@ -23,8 +26,16 @@ class NoCache(http.server.SimpleHTTPRequestHandler):
             return None
         return super().send_head()
 
+    def do_GET(self):
+        if self.path.startswith('/grade/'):
+            return grader.handle(self, 'GET')
+        return super().do_GET()
 
-port = int(sys.argv[1]) if len(sys.argv) > 1 else 8380
+    def do_POST(self):
+        return grader.handle(self, 'POST')
+
+
+port = int(sys.argv[1]) if len(sys.argv) > 1 else 8230
 here = pathlib.Path(__file__).resolve().parent
 handler = functools.partial(NoCache, directory=str(here))
 print(f'Serving {here} on port {port} (Ctrl+C to stop)')

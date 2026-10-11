@@ -1,0 +1,61 @@
+/* ---------- proofs (js/08) ---------- */
+/* A proof set like the book's, on a page of its own: serif type with the math to match, the
+   lead word in bold with a colon (Proof:, as the handouts write it), sentences that run on,
+   an equation centered on its own line, the paragraphs after the first indented, ∎ at the
+   right margin. The proof a 3.5 question hands you and the worked proof look the same. */
+:root {
+  --book: 'STIX Two Text', 'Times New Roman', Times, serif;
+  --page: #fdfcf9; --page-ink: #1d1f1c; --page-muted: #5f645c; --page-line: #dcd9cf; --page-gold: #b77706;
+  --page-shadow: 0 1px 2px rgba(23, 36, 28, 0.1), 0 14px 32px -18px rgba(23, 36, 28, 0.45);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page: #1c201c; --page-ink: #e3e6df; --page-muted: #9ba296; --page-line: #353b34; --page-gold: #f0b43a;
+    --page-shadow: 0 1px 0 rgba(0, 0, 0, 0.3), 0 14px 32px -18px rgba(0, 0, 0, 0.8);
+  }
+}
+:root[data-theme="dark"] {
+  --page: #1c201c; --page-ink: #e3e6df; --page-muted: #9ba296; --page-line: #353b34; --page-gold: #f0b43a;
+  --page-shadow: 0 1px 0 rgba(0, 0, 0, 0.3), 0 14px 32px -18px rgba(0, 0, 0, 0.8);
+}
+.book {
+  max-width: 70ch; margin: 12px 0 4px; padding: 18px clamp(14px, 4vw, 30px) 14px;
+  background: var(--page); color: var(--page-ink); border-radius: 4px; box-shadow: var(--page-shadow);
+  font-family: var(--book); font-size: 1.12rem; line-height: 1.6;
+}
+.book-para { margin: 0; }
+.book-para + .book-para { margin-top: 6px; text-indent: 1.5em; }
+.book-para.led { text-indent: 0; }
+.book .lead { font-weight: 700; }
+.book .math-d { text-indent: 0; padding: 6px 0; }
+.book .qed { float: right; margin-left: 1em; }
+.proof-note { margin: 2px 0 0; color: var(--muted); font-size: 0.9rem; }
+
+/* where a checked proof went wrong, in the worked one (js/14): an underline in the color of
+   the kind of mistake, and its number (the same as on your page) */
+.book .fx { border-bottom: 2px solid var(--k); padding-bottom: 1px; }
+.book .fx-m { color: var(--k); }
+.book .fx-t { color: var(--page-ink); }
+.book .mk-num { width: 20px; height: 20px; font-size: 1rem; border-width: 1.5px; background: var(--page); margin-left: 3px; text-indent: 0; vertical-align: 0.15em; }
+.book .math-d:has(.mk-num) { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px; }
+
+/* the worked proof, played a step at a time: a step not shown yet keeps its room, the new
+   one is underlined in gold, and the line under the proof says its move and why */
+.proof-player { margin-top: 18px; }
+.book .unseen { visibility: hidden; }
+.proof-player [data-step] { cursor: pointer; }
+.proof-player [data-step]:focus-visible { outline: 2px solid var(--rule); outline-offset: 1px; }
+.proof-player .now:not(.math-d):not(.qed) { text-decoration: underline; text-decoration-color: var(--page-gold); text-decoration-thickness: 2px; text-underline-offset: 7px; }
+.proof-player .math-d.now svg { border-bottom: 2px solid var(--page-gold); padding-bottom: 2px; }
+.why-line { clear: both; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin: 12px 0 0; padding-top: 8px; border-top: 0.75px solid var(--page-line); font-family: var(--body); font-size: 0.92rem; text-indent: 0; }
+.why-text { flex: 1; min-width: 12em; }
+.book-foot { clear: both; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 4px 12px; margin-top: 8px; text-indent: 0; }
+.textbtn { border: 0; background: none; padding: 4px 0; cursor: pointer; color: var(--page-muted); font-family: var(--mono); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: underline; text-underline-offset: 3px; }
+.foot-note { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--page-muted); }
+.proof-move { font-family: var(--mono); font-size: 0.72rem; padding: 2px 9px; border: 1.5px solid currentColor; border-radius: 999px; font-weight: 600; white-space: nowrap; }
+:root { --pv0: #c2410c; --pv1: #1d4ed8; --pv2: #9333ea; --pv3: #be185d; --pv4: #0f766e; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --pv0: #fb923c; --pv1: #60a5fa; --pv2: #c084fc; --pv3: #f472b6; --pv4: #2dd4bf; }
+}
+:root[data-theme="dark"] { --pv0: #fb923c; --pv1: #60a5fa; --pv2: #c084fc; --pv3: #f472b6; --pv4: #2dd4bf; }
+.mv-a { color: var(--pv0); } .mv-b { color: var(--pv1); } .mv-c { color: var(--pv2); } .mv-d { color: var(--pv3); } .mv-e { color: var(--pv4); } .mv-s { color: var(--muted); }

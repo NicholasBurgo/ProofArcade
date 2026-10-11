@@ -1,0 +1,68 @@
+/* ---------- Check my writing (js/14) ---------- */
+/* the panel under pen mode's bottom row: its left edge takes the verdict's color */
+.pen-review {
+  --v: var(--rule);
+  display: grid; gap: 12px; margin-top: 14px; padding: 14px 16px 16px;
+  border: 2px solid var(--rule-soft); border-left: 5px solid var(--v); border-radius: 12px; background: var(--paper);
+}
+.pen-review[data-v="right"] { --v: var(--green); }
+.pen-review[data-v="almost"] { --v: var(--gold); }
+.pen-review[data-v="wrong"] { --v: var(--red); }
+.pen-review[data-v="unfinished"] { --v: var(--muted); }
+.pen-review[data-v="error"] { --v: var(--red); background: var(--red-soft); border-color: var(--red-soft); border-left-color: var(--red); }
+.pr-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 12px; }
+.timer { font-family: var(--mono); font-variant-numeric: tabular-nums; color: var(--muted); font-size: 0.85rem; }
+.working { margin: 0; font-weight: 700; }
+.sweep { height: 4px; border-radius: 4px; background: var(--rule-soft); overflow: hidden; position: relative; }
+.sweep::after { content: ''; position: absolute; top: 0; bottom: 0; width: 34%; border-radius: 4px; background: var(--rule); animation: sweep 1.4s ease-in-out infinite; }
+@keyframes sweep { from { left: -34%; } to { left: 100%; } }
+@media (prefers-reduced-motion: reduce) { .sweep::after { animation: none; left: 0; width: 100%; opacity: 0.5; } }
+.pen-review .sub { margin: 0; color: var(--muted); font-size: 0.88rem; }
+.pen-review .row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.btn.small { font-size: 1.05rem; padding: 8px 16px; }
+.err-title { margin: 0; font-weight: 700; }
+
+/* What it read: the text to fix, on ruled lines, and its preview */
+.fixnote { margin: 0; font-weight: 700; }
+.read-box {
+  width: 100%; resize: vertical; padding: 0 12px;
+  font-family: var(--mono); font-size: 0.86rem; line-height: 32px; color: var(--ink);
+  background-color: var(--sheet); background-image: repeating-linear-gradient(to bottom, transparent 0 31px, var(--rule-soft) 31px 32px); background-attachment: local;
+  border: 2px solid var(--rule); border-radius: 10px;
+}
+.lbl-s { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.preview { display: grid; gap: 4px; padding: 10px 12px; background: var(--sheet); border: 1.5px dashed var(--rule-soft); border-radius: 10px; }
+.read-line { min-height: 1.5em; overflow-x: auto; }
+.unsure { background: var(--gold-soft); border: 1.5px dashed var(--gold); border-radius: 6px; padding: 0 6px; font-family: var(--mono); font-size: 0.85em; white-space: nowrap; }
+.crossed { color: var(--muted); text-decoration: line-through; }
+.legend { margin: 0; color: var(--muted); font-size: 0.82rem; }
+
+/* the verdict: the panel opens up, the worked proof (js/08) first, then the grade in a box of
+   its own whose left edge takes the verdict's color: a grading stamp, the rubric score, and
+   each mistake in a line, grouped by kind, numbered like the marks on your page (js/14c) */
+.pen-review.done { border: 0; padding: 0; background: none; gap: 14px; }
+.pen-review.done > .proof-player { margin-top: 0; }
+.grade { display: grid; gap: 10px; padding: 14px 16px 16px; border: 2px solid var(--rule-soft); border-left: 5px solid var(--v); border-radius: 12px; background: var(--paper); }
+.grade .row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.grade .sub { margin: 0; color: var(--muted); font-size: 0.88rem; }
+.verdict-top { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+.stamp {
+  display: inline-block; transform: rotate(-3deg);
+  font-family: var(--display); font-weight: 800; font-size: 1.7rem; line-height: 1; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--v); border: 4px double var(--v); border-radius: 8px; padding: 6px 14px 4px;
+}
+.pen-review[data-v="unfinished"] .stamp { border-style: dashed; border-width: 3px; }
+.score { font-family: var(--mono); font-size: 0.8rem; color: var(--muted); border: 1.5px solid var(--rule-soft); border-radius: 999px; padding: 2px 10px; }
+.score b { color: var(--ink); font-variant-numeric: tabular-nums; }
+.summary { margin: 0; max-width: 62ch; }
+.kinds { display: flex; flex-wrap: wrap; gap: 6px; }
+.kind { font-family: var(--mono); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--k); border: 1.5px solid var(--k); border-radius: 999px; padding: 1px 9px; }
+.kind-group { display: grid; gap: 6px; padding-left: 10px; border-left: 3px solid var(--k); }
+.kind-head { font-family: var(--mono); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--k); }
+.kind-head small { margin-left: 6px; color: var(--muted); font-family: var(--body); font-size: 0.8rem; font-weight: 400; letter-spacing: 0.02em; text-transform: none; }
+.fixes { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.fixes li { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: 4px 10px; }
+.fixes .fix-text { max-width: 62ch; padding-top: 2px; }
+.fixes .where { margin-right: 8px; font-family: var(--mono); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+/* when the marks couldn't go on your page: the line of yours it means */
+.fixes .said { grid-column: 2; background: var(--sheet); border-left: 3px solid var(--k); border-radius: 0 8px 8px 0; padding: 6px 10px; overflow-x: auto; }

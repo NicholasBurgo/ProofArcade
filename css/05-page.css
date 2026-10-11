@@ -1,0 +1,30 @@
+/* ---------- the page: S Pen ink, confetti, and the small things ---------- */
+:root { --pen-blue: #1d4ed8; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --pen-blue: #60a5fa; } }
+:root[data-theme="dark"] { --pen-blue: #60a5fa; }
+#fx { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 40; }
+/* S Pen ink: laid over the whole page, never in the way of a tap */
+#ink { position: absolute; top: 0; left: 0; z-index: 25; pointer-events: none; max-width: 100%; }
+.pen-check { position: fixed; z-index: 27; left: 12px; top: 80px; margin: 0; padding: 8px 10px; border-radius: 8px; background: var(--ink); color: var(--paper); font-family: var(--mono); font-size: 0.8rem; line-height: 1.35; pointer-events: none; white-space: pre; }
+.ink-tools { position: fixed; z-index: 26; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); display: flex; gap: 8px; }
+.ink-clear[aria-pressed="true"] { background: var(--rule); color: var(--sheet); }
+.ink-clear {
+  padding: 8px 14px; border-radius: 999px; cursor: pointer;
+  border: 1.5px solid var(--rule); background: var(--sheet); color: var(--rule);
+  font-family: var(--mono); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  box-shadow: var(--shadow);
+}
+.loading { color: var(--muted); font-family: var(--mono); font-size: 0.85rem; padding: 18px 0; }
+.toast {
+  position: fixed; left: 50%; top: 30%; z-index: 30; transform: translateX(-50%);
+  padding: 12px 22px; border-radius: 14px; background: var(--gold); color: var(--sheet);
+  font-family: var(--display); font-weight: 800; font-size: 1.9rem; text-transform: uppercase; text-align: center;
+  box-shadow: var(--shadow); animation: toast 1.6s ease-out forwards; pointer-events: none;
+}
+@keyframes toast { 0% { opacity: 0; transform: translate(-50%, 12px) scale(0.9); } 15%, 75% { opacity: 1; transform: translate(-50%, 0) scale(1); } 100% { opacity: 0; transform: translate(-50%, -12px); } }
+/* raised powers in plain text (js/06), kept with their base */
+.mx { text-transform: none; white-space: nowrap; }
+.mx sup, .mx sub { font-size: 0.72em; line-height: 0; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}

@@ -1,0 +1,30 @@
+/* ---------- the checker's marks on your page (js/14c) ---------- */
+/* a teacher's pen in the color of the kind of mistake: an underline under what's wrong, a
+   caret where words go in with them written small beside it, a circled number in the margin;
+   laid under the ink, so the writing stays on top, and never in the way of a tap */
+:root {
+  --hand: 'Caveat', 'Segoe Print', 'Comic Sans MS', cursive;
+  --k-shape: #be185d; --k-def: #7c3aed; --k-why: #0f766e; --k-alg: #c2410c;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --k-shape: #f472b6; --k-def: #c4b5fd; --k-why: #2dd4bf; --k-alg: #fb923c; }
+}
+:root[data-theme="dark"] { --k-shape: #f472b6; --k-def: #c4b5fd; --k-why: #2dd4bf; --k-alg: #fb923c; }
+.k-shape { --k: var(--k-shape); }
+.k-def { --k: var(--k-def); }
+.k-why { --k: var(--k-why); }
+.k-alg { --k: var(--k-alg); }
+
+#marks { position: absolute; top: 0; left: 0; z-index: 24; pointer-events: none; }
+#marks > div { position: absolute; color: var(--k, var(--red)); }
+.mk-ul { height: 3px; border-radius: 2px; background: var(--k, var(--red)); }
+.mk-caret svg { display: block; width: 16px; height: 14px; }
+.mk-insert { transform: translateY(-100%); font-family: var(--hand); font-size: 1.3rem; font-weight: 700; line-height: 1; white-space: nowrap; }
+.mk-insert.mk-after { transform: none; }
+.mk-insert.mk-gap { transform: none; display: flex; align-items: center; gap: 5px; }
+.mk-gap .mk-num { width: 20px; height: 20px; border-width: 1.5px; font-size: 1rem; }
+.mk-num {
+  display: inline-grid; place-items: center; flex: none; width: 26px; height: 26px;
+  border: 2px solid var(--k, var(--red)); border-radius: 50%; background: var(--sheet); color: var(--k, var(--red));
+  font-family: var(--hand); font-size: 1.2rem; font-weight: 700; line-height: 1;
+}
